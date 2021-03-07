@@ -1,0 +1,58 @@
+{% extends 'bootstrap/base.html' %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+<!DOCTYPE html>
+<body>
+  <style>
+    body{
+      background-image:url("https://images.pexels.com/photos/5538223/pexels-photo-5538223.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+      background-color: black;
+      background-size: 90%, 100%;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: white;
+      font-size: 26px;
+    }
+    a:link {
+      color: #e45826;
+    }
+
+  </style>
+  <h4 style="text-align: center;">Some of the websites may no longer be available or incorrect. Data is updated and maintained through OpenBreweryDB API.</h4>
+  <form method="post" style="text-align:center; padding-top: 20px;" novalidate>
+    <div class="form">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-lg-offset-4 col-md-6  col-xs-12">
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "warning"}) }}
+          </div>
+        </div>
+      </div>
+      </div>
+
+</body>
+
+{% for item in data %}
+
+<div class="container-fluid">
+    <div class="row" style="text-align: center; margin-top:15px; margin-bottom: -15px; padding-left: 200px;">
+        <div class="col-md-8" style="padding-top:5px; margin-left: 200px; font-size: 24;">
+          {% if item.website_url %}
+          <p>Brewery Type: {{item.brewery_type.title()}}</p>
+           <a href="{{item.website_url}}" target="_blank"> {{ item.name}} </a> 
+           {% else %}
+           <p> {{item.name}} </p>
+           {% endif %}
+           {% if item.street %}
+           <p>{{item.street}}, {{item.city}}</p>
+           {% else %}
+           <p> No Adress Information</p>
+           {% endif %}
+        </div>
+    </div>
+  </div>
+  <hr style="width: 10%; text-align: center; border-color: #e45826;"
+    {% endfor %}
+{% endblock %}
